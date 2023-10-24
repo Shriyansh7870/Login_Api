@@ -2,11 +2,14 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const cors = require("cors");
 
 const secret_key = "shriyansh";
 
 const app = express();
 app.use(bodyParser.json());
+
+app.use(cors());
 
 const array = [];
 
@@ -26,7 +29,7 @@ const register = (req, res) => {
   array.push(data);
   const token = jwt.sign({ useremail: data.email }, secret_key);
 
-  res.status(200).json({ msg: "user register", token: token });
+  res.status(200).json({ msg: "user registered", token: token });
 };
 
 const login = (req, res) => {
@@ -49,5 +52,4 @@ const login = (req, res) => {
     return res.status(404).json({ msg: "Email is wrong" });
   }
 };
-
-module.exports = { login, register };
+module.exports = { register, login };
