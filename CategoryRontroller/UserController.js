@@ -1,6 +1,9 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+
+const secret_key = "shriyansh";
 
 const app = express();
 app.use(bodyParser.json());
@@ -21,12 +24,13 @@ const register = (req, res) => {
   data.password = hashedPassword;
 
   array.push(data);
-  res.status(200).json(array);
+  const token = jwt.sign({ useremail: data.email }, secret_key);
+
+  res.status(200).json({ msg: "user register", token: token });
 };
 
 const login = (req, res) => {
   const logindata = req.body;
-  console.log("Login details", logindata);
 
   const user = array.find((item) => item.email === logindata.email);
 
@@ -45,4 +49,5 @@ const login = (req, res) => {
     return res.status(404).json({ msg: "Email is wrong" });
   }
 };
+
 module.exports = { login, register };
