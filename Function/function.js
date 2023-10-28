@@ -47,7 +47,7 @@ const login = (req, res) => {
   });
 
   if (detail1) {
-    const validate = bcrypt.compareSync(data.password, details2.password);
+    const validate = bcrypt.compareSync(data.password, detail1.password);
 
     const token = jwt.sign({ useremail: data.email }, secrete_key, {
       expiresIn: "360000",
