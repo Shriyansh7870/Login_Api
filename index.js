@@ -1,16 +1,14 @@
 const express = require("express");
 const userRouter = require("./Routing/userRouter");
+const auth = require("./CategoryRontroller/Auth/Authon");
 const app = express();
+const cors = require("cors");
 app.use(express.json());
-const bodyParser = require("body-parser");
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors());
+app.use(express.urlencoded({ extended: true }));
 app.use("/api", userRouter);
-
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "http://localhost:4000");
-  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  next();
+app.get("/api", auth, (req, res) => {
+  res.send("Home page");
 });
 app.listen(4000, () => {
   console.log(`Server is running fine`);
