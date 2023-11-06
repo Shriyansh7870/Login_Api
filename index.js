@@ -2,7 +2,6 @@ const express = require("express");
 const cors = require("cors");
 const controller = require("./Controller/Controller");
 const home = require("./Controller/Home");
-
 const app = express();
 app.use(
   cors({
